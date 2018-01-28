@@ -6,6 +6,10 @@ public class ButtonInteractable : MonoBehaviour
 {
     public virtual void doAction()
     {
-        Debug.Log("No action");
+        Debug.Log("No doAction");
+    }
+    public virtual void undoAction()
+    {
+        Debug.Log("No undoAction");
     }
 }

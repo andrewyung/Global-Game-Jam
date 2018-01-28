@@ -8,6 +8,7 @@ TagManager:
   - Boulder
   - Valid Area
   - UI
+  - SuitPlayer
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Boulder
   - 
   - Ground
   - 
@@ -29,8 +30,8 @@ TagManager:
   - LayerTraverse
   - 
   - Player
-  - 
-  - 
+  - PlayerSuit
+  - PlayerSuitBlock
   - 
   - 
   - 

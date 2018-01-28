@@ -2,74 +2,78 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerMovement))]
-public class PlayerController : MovableValidObject {
+public class PlayerController : MonoBehaviour {
 
     [SerializeField]
-    private PlayerMovement playerMovement;
+    private float suitEnterDistance = 0.3f;
+
+    [SerializeField]
+    private PlayerMovement[] playerSuitMovement;
+
+    [SerializeField]
+    private PlayerMovement defaultPlayerMovement;
+
+    private PlayerMovement currentPlayerMovement;
 
     private Vector3 movementVector;
 
-    private bool groundContact = false;
-
 	// Use this for initialization
 	void Start () {
-        playerMovement = GetComponent<PlayerMovement>();
-	}
+        defaultPlayerMovement = GetComponentInChildren<PlayerMovement>();
+
+        currentPlayerMovement = defaultPlayerMovement;
+        currentPlayerMovement.setActivated(true);
+    }
 	
 	// Update is called once per frame
 	void Update () {
         movementVector.Set(0, 0, 0);
 		if (Input.anyKey && !LayerManager.isLayerAnimating())
         {
-            if (Input.GetKey(KeyCode.A))
-            {
-                movementVector += transform.right;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                movementVector += -transform.right;
-            }
-            if (Input.GetKey(KeyCode.W))
-            {
-                movementVector += Quaternion.Euler(-CameraOrientate.mainCameraTransform.rotation.eulerAngles.x, 2, 0) * -transform.forward * 2f;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                movementVector += Quaternion.Euler(-CameraOrientate.mainCameraTransform.rotation.eulerAngles.x, 2, 0) * transform.forward * 2f;
-            }
             Debug.DrawLine(transform.position, transform.position + Quaternion.Euler(-CameraOrientate.mainCameraTransform.rotation.eulerAngles.x, 2, 0) * transform.forward, Color.black);
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !LayerManager.isLayerAnimating())
             {
-                LayerManager.nextLayer();
+                LayerManager.nextLayer(currentPlayerMovement == defaultPlayerMovement);
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (currentPlayerMovement == defaultPlayerMovement)//not in suit, check for suit enter
+                {
+                    for (int i = 0; i < playerSuitMovement.Length; i++)
+                    {
+                        Debug.Log("disance from suit: " + Vector3.Distance(playerSuitMovement[i].transform.position, defaultPlayerMovement.gameObject.transform.position));
+                        if (Vector3.Distance(playerSuitMovement[i].transform.position, defaultPlayerMovement.gameObject.transform.position) < suitEnterDistance)
+                        {
+                            //deactivate old
+                            currentPlayerMovement.setActivated(false);
+                            currentPlayerMovement = playerSuitMovement[i];
+                            //activate new
+                            currentPlayerMovement.setActivated(true);
+
+                            defaultPlayerMovement.gameObject.SetActive(false);
+                            break;
+                        }
+                    }
+                }
+                else //in suit
+                {
+                    defaultPlayerMovement.gameObject.transform.position = currentPlayerMovement.gameObject.transform.position;
+                    //deactivate old
+                    currentPlayerMovement.setActivated(false);
+                    currentPlayerMovement = defaultPlayerMovement;
+                    //activate new
+                    currentPlayerMovement.setActivated(true);
+
+                    defaultPlayerMovement.gameObject.SetActive(true);
+                }
             }
         }
+        
         //Debug.Log(groundContact);
-        if (groundContact)
+        if (PlayerMovement.groundContact)
         {
-            playerMovement.moveDirection(movementVector);
+            currentPlayerMovement.handleMoveDirection();
         }
-	}
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.tag.Equals("Layer"))
-        {
-            groundContact = true;
-        }
-    }
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.collider.tag.Equals("Layer"))
-        {
-            groundContact = false;
-        }
-    }
-
-    public override void handleDestroy()
-    {
-        GameManager.endGame();
-        //destroy animation
-        //end game
     }
 }

@@ -15,10 +15,23 @@ public class LayerButton : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag.Equals("Player") && targetInteractable != null)
+        if ((collider.gameObject.tag.Equals("SuitPlayer") ||
+            collider.gameObject.tag.Equals("Boulder"))
+            && targetInteractable != null)
         {
             Debug.Log("interact");
             targetInteractable.doAction();
+        }
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        if ((collider.gameObject.tag.Equals("SuitPlayer") ||
+            collider.gameObject.tag.Equals("Boulder"))
+            && targetInteractable != null)
+        {
+            Debug.Log("interact");
+            targetInteractable.undoAction();
         }
     }
 }

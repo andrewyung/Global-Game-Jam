@@ -88,10 +88,13 @@ public class LayerManager : MonoBehaviour {
         return nextLayerGameObject;
     }
 
-    public static void nextLayer()
+    public static void nextLayer(bool validChange)
     {
-        GameManager.layerChange(currentLayerIndex);
-        lm.StartCoroutine(lm.animateLayer());
+        GameManager.layerChange(currentLayerIndex, validChange);
+        if (validChange)
+        {
+            lm.StartCoroutine(lm.animateLayer());
+        }
     }
 
     private IEnumerator animateLayer()

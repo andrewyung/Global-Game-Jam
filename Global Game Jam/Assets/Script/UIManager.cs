@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour {
         mainTextField.text = text;
         mainTextField.color = Color.black;
 
+        StopAllCoroutines();
         StartCoroutine(textDisableTimer(1.5f));
     }
 

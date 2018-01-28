@@ -34,8 +34,13 @@ public class GameManager : MonoBehaviour {
         gm.ui.setText("You died!");
     }
 
-    public static void layerChange(int toLayer)
+    public static void layerChange(int toLayer, bool validChange)
     {
+        if (!validChange)
+        {
+            gm.ui.setText("Exit suit to teleport");
+            return;
+        }
         gm.ui.setText("Layer " + (toLayer + 1));
     }
 

@@ -15,7 +15,13 @@ public class LayerHole : MonoBehaviour {
         {
             collider.gameObject.layer = 17;//layer 17 is LayerTraverse
             //collider.gameObject.GetComponent<Renderer>().enabled = false;
-            
+        }
+    }
+
+    void OnTriggerStay(Collider collider)
+    {
+        if (collider.tag.Equals("Boulder"))
+        {
             collider.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, collider.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
         }
     }
@@ -24,11 +30,12 @@ public class LayerHole : MonoBehaviour {
     {
         if (collider.tag.Equals("Boulder"))
         {
-            collider.gameObject.layer = 0;//back to default
+            collider.gameObject.layer = 12;//back to default
             collider.gameObject.GetComponent<Renderer>().enabled = false;
+            collider.gameObject.GetComponentsInChildren<Renderer>()[1].enabled = false;
 
             collider.gameObject.transform.SetParent(LayerManager.getNextLayerGameObject().transform);
-            collider.gameObject.transform.localScale = new Vector3(4, 4, 1);
+            collider.gameObject.transform.localScale = new Vector3(7, 7, 1);
         }
     }
 }

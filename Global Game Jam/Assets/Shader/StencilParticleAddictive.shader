@@ -11,13 +11,9 @@ Category {
 	Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
 	Blend SrcAlpha One
 	ColorMask RGB
-	Cull Off Lighting Off ZWrite Off
+	Cull Off Lighting Off ZWrite On
+	ZTest LEqual 
 	
-	Stencil{
-         Ref 1
-         Comp NotEqual	
-         Pass keep
-	}
 
 	SubShader {
 		Pass {

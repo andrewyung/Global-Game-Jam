@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerMovement))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MovableValidObject {
 
     [SerializeField]
     private PlayerMovement playerMovement;
@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
                 LayerManager.nextLayer();
             }
         }
-        Debug.Log(groundContact);
+        //Debug.Log(groundContact);
         if (groundContact)
         {
             playerMovement.moveDirection(movementVector);
@@ -64,5 +64,12 @@ public class PlayerController : MonoBehaviour {
         {
             groundContact = false;
         }
+    }
+
+    public override void handleDestroy()
+    {
+        GameManager.endGame();
+        //destroy animation
+        //end game
     }
 }

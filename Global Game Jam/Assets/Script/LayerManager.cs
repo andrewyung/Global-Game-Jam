@@ -72,6 +72,13 @@ public class LayerManager : MonoBehaviour {
         }
     }
 
+    public static GameObject getCurrentLayerGameObject()
+    {
+        GameObject currentLayerGameObject = lm.layerGameObjects[currentLayerIndex];
+
+        return currentLayerGameObject;
+    }
+
     public static GameObject getNextLayerGameObject()
     {
         lm.incrementCurrentLayerIndex();
@@ -83,6 +90,7 @@ public class LayerManager : MonoBehaviour {
 
     public static void nextLayer()
     {
+        GameManager.layerChange(currentLayerIndex);
         lm.StartCoroutine(lm.animateLayer());
     }
 

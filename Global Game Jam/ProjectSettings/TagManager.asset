@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Layer
   - Boulder
+  - Valid Area
+  - UI
   layers:
   - Default
   - TransparentFX

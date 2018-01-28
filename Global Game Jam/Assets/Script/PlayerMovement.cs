@@ -21,6 +21,6 @@ public class PlayerMovement : MonoBehaviour {
 	public void moveDirection(Vector3 relativeDirection)
     {
         rb.velocity = Vector3.ClampMagnitude(relativeDirection.normalized * movementMultiplier, maxVelocityMagnitude);
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
     }
 }

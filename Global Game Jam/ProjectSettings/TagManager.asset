@@ -9,6 +9,7 @@ TagManager:
   - Valid Area
   - UI
   - SuitPlayer
+  - Rocket
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Background
   - 
   - 
   - 
@@ -32,7 +33,7 @@ TagManager:
   - Player
   - PlayerSuit
   - PlayerSuitBlock
-  - 
+  - PlayerBlock
   - 
   - 
   - 

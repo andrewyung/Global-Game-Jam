@@ -15,6 +15,8 @@ public class LayerHole : MonoBehaviour {
         {
             collider.gameObject.layer = 17;//layer 17 is LayerTraverse
             //collider.gameObject.GetComponent<Renderer>().enabled = false;
+            collider.gameObject.transform.SetParent(LayerManager.getNextLayerGameObject().transform);
+
         }
     }
 
@@ -32,9 +34,7 @@ public class LayerHole : MonoBehaviour {
         {
             collider.gameObject.layer = 12;//back to default
             collider.gameObject.GetComponent<Renderer>().enabled = false;
-            collider.gameObject.GetComponentsInChildren<Renderer>()[1].enabled = false;
 
-            collider.gameObject.transform.SetParent(LayerManager.getNextLayerGameObject().transform);
             collider.gameObject.transform.localScale = new Vector3(7, 7, 1);
         }
     }

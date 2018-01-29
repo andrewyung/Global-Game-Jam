@@ -16,8 +16,8 @@ public class LayerManager : MonoBehaviour {
     [SerializeField]
     private GameObject[] layerGameObjects;
 
-    private static int currentLayerIndex = 0;
-    private static bool layerAnimating = false;
+    private static int currentLayerIndex;
+    private static bool layerAnimating;
 
     public static bool isLayerAnimating()
     {
@@ -28,14 +28,7 @@ public class LayerManager : MonoBehaviour {
 
     void Awake()
     {
-        if (lm == null)
-        {
-            lm = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        lm = this;
     }
 
     // Use this for initialization
@@ -47,6 +40,7 @@ public class LayerManager : MonoBehaviour {
             layerGameObjects[i].transform.position = initialPosition + (offsetIncrements * i);
             layerGameObjects[i].transform.localScale = initialScale + (downsizeIncrements * i);
         }
+        reset();
     }
 
     private void incrementCurrentLayerIndex()
@@ -70,6 +64,12 @@ public class LayerManager : MonoBehaviour {
         {
             currentLayerIndex--;
         }
+    }
+
+    public static void reset()
+    {
+        currentLayerIndex = 0;
+        layerAnimating = false;
     }
 
     public static GameObject getCurrentLayerGameObject()

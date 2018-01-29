@@ -46,17 +46,19 @@ public class Boulder : MovableValidObject {
             material.SetFloat("_DissolveThreshold", shaderDissolveThreshold);
             yield return new WaitForEndOfFrame();
         }
-
-        SpriteRenderer[] renders = GetComponentsInChildren<SpriteRenderer>();
-        for (int i = 0; i < renders.Length - 1; i++)//except last one
+        
+        //return back to boulder spawner if not null
+        if (spawner != null)
         {
-            renders[i].enabled = true;
+            SpriteRenderer[] renders = GetComponentsInChildren<SpriteRenderer>();
+            for (int i = 0; i < renders.Length - 1; i++)//except last one
+            {
+                renders[i].enabled = true;
+            }
+            material.SetFloat("_DissolveThreshold", 1.92f);
+            rb.isKinematic = false;
+
+            spawner.returnBoulder(gameObject);
         }
-        material.SetFloat("_DissolveThreshold", 1.92f);
-        rb.isKinematic = false;
-        //return back to boulder spawner
-        spawner.
-            returnBoulder(
-            gameObject);
     }
 }

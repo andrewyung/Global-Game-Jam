@@ -10,6 +10,8 @@ public class BoulderSpawner : ButtonInteractable {
     [SerializeField]
     private int numberOfBoulders;
 
+    private TextMesh text;
+
     private ArrayList bouldersInstantiated;
 
 	// Use this for initialization
@@ -24,7 +26,9 @@ public class BoulderSpawner : ButtonInteractable {
 
             bouldersInstantiated.Add(newBoulder);
         }
-	}
+        text = GetComponentInChildren<TextMesh>();
+        text.text = numberOfBoulders.ToString();
+    }
 
     public override void doAction()
     {
@@ -37,6 +41,8 @@ public class BoulderSpawner : ButtonInteractable {
         boulder.SetActive(false);
         bouldersInstantiated.Add(boulder);
         boulder.transform.SetParent(null);
+        
+        text.text = bouldersInstantiated.Count.ToString();
     }
     
     public bool spawnBoulder()
@@ -52,6 +58,8 @@ public class BoulderSpawner : ButtonInteractable {
         boulderSpawned.transform.position = transform.position;
         boulderSpawned.SetActive(true);
         boulderSpawned.transform.SetParent(LayerManager.getCurrentLayerGameObject().transform);
+
+        text.text = bouldersInstantiated.Count.ToString();
         return true;
     }
 }

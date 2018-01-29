@@ -12,14 +12,7 @@ public class UIManager : MonoBehaviour {
 
     void Awake()
     {
-        if (ui == null)
-        {
-            ui = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        ui = this;
     }
 
     public void setText(string text)

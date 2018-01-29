@@ -4,21 +4,34 @@ using UnityEngine;
 
 public class HoldDoorInteract : ButtonInteractable
 {
-    private GameObject doorChild;
+    private BoxCollider boxCollider;
+
+    private Animator[] animator;
     // Use this for initialization
     void Start()
     {
-        doorChild = transform.GetChild(0).gameObject;
+        boxCollider = GetComponentInChildren<BoxCollider>();
+        animator = GetComponentsInChildren<Animator>();
     }
 
     public override void doAction()
     {
-        doorChild.gameObject.SetActive(false);
+        boxCollider.enabled = false;
+
+        for (int i = 0; i < animator.Length; i++)
+        {
+            animator[i].SetBool("Open", true);
+        }
     }
 
     public override void undoAction()
     {
-        doorChild.gameObject.SetActive(true);
+        boxCollider.enabled = true;
+
+        for (int i = 0; i < animator.Length; i++)
+        {
+            animator[i].SetBool("Open", false);
+        }
     }
 }
 

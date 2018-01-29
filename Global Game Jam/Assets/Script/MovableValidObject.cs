@@ -13,6 +13,7 @@ public class MovableValidObject : MonoBehaviour {
     {
         if (collider.gameObject.tag.Equals("Valid Area"))
         {
+            Debug.Log("other ; " + collider.name);
             handleDestroy(); 
         }
     }

@@ -6,11 +6,15 @@ public class TimedDoorInteract : ButtonInteractable {
 
     public float timer = 2;
 
-    private GameObject doorChild;
-	// Use this for initialization
-	void Start () {
-        doorChild = transform.GetChild(0).gameObject;
-	}
+    private BoxCollider boxCollider;
+
+    private Animator[] animator;
+
+    void Start ()
+    {
+        boxCollider = GetComponentInChildren<BoxCollider>();
+        animator = GetComponentsInChildren<Animator>();
+    }
 
     public override void doAction()
     {
@@ -20,10 +24,18 @@ public class TimedDoorInteract : ButtonInteractable {
 
     IEnumerator timerDoor()
     {
-        doorChild.SetActive(false);
+        for (int  i = 0; i < animator.Length; i++)
+        {
+            animator[i].SetBool("Open", true);
+        }
+        boxCollider.enabled = (false);
 
         yield return new WaitForSeconds(timer);
 
-        doorChild.SetActive(true);
+        for (int i = 0; i < animator.Length; i++)
+        {
+            animator[i].SetBool("Open", false);
+        }
+        boxCollider.enabled = (true);
     }
 }

@@ -39,6 +39,8 @@ public class PlayerMovement : MovableValidObject
 
             animator.SetFloat("Horizontal", 0);
             animator.SetFloat("Vertical", 0);
+
+            groundContact = true;
         }
         else
         {
@@ -49,8 +51,34 @@ public class PlayerMovement : MovableValidObject
         this.activated = activated;
     }
 
+    public void Update()
+    {
+        if (tag.Equals("Player"))
+        {
+            RaycastHit rch;
+            Physics.Raycast(transform.position, -transform.up, out rch, 0.6f);
+            Debug.DrawLine(transform.position, transform.position - (transform.up * 0.6f), Color.blue);
+
+            if (rch.collider != null)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else
+            {
+
+                transform.GetChild(1).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void stopXZMovement()
+    {
+        rb.velocity = new Vector3(0, rb.velocity.y, 0);
+    }
+
     public void handleMoveDirection()
     {
+        Debug.Log(2);
         Vector3 keyDirectional = Vector3.zero;
         Vector3 movementVector = Vector3.zero;
         if (Input.GetKey(KeyCode.A))
@@ -79,6 +107,10 @@ public class PlayerMovement : MovableValidObject
         }
 
         rb.velocity = Vector3.ClampMagnitude(movementVector.normalized * movementMultiplier, maxVelocityMagnitude);
+        if (gameObject.tag.Equals("Rocket"))
+        {
+            rb.velocity = new Vector3(0, 50, 0);
+        }
         //Debug.Log(rb.velocity);
 
         if (keyDirectional == Vector3.zero)
@@ -97,6 +129,8 @@ public class PlayerMovement : MovableValidObject
 
             checkSpriteFlip(-lastKeyDirectional);
         }
+
+        Debug.Log(3);
     }
 
     void checkSpriteFlip(Vector3 keyDirection)
@@ -111,16 +145,16 @@ public class PlayerMovement : MovableValidObject
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.tag.Equals("Layer") && activated)
+        if (collision.collider.gameObject.layer == 14 && activated)
         {
             groundContact = true;
         }
     }
     void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.tag.Equals("Layer") && activated)
+        if (collision.collider.gameObject.layer == 14 && activated)
         {
             groundContact = false;
         }
@@ -128,8 +162,16 @@ public class PlayerMovement : MovableValidObject
     
     public override void handleDestroy()
     {
-        GameManager.endGame();
-        //destroy animation
-        //end game
+        Debug.Log("tag : " + gameObject.tag);
+        if (gameObject.tag.Equals("Rocket"))
+        {
+            GameManager.winGame();
+        }
+        else
+        {
+            GameManager.endGame();
+            //destroy animation
+            //end game
+        }
     }
 }

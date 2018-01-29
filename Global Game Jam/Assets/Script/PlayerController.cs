@@ -30,10 +30,11 @@ public class PlayerController : MonoBehaviour {
         movementVector.Set(0, 0, 0);
 		if (Input.anyKey && !LayerManager.isLayerAnimating())
         {
-            Debug.DrawLine(transform.position, transform.position + Quaternion.Euler(-CameraOrientate.mainCameraTransform.rotation.eulerAngles.x, 2, 0) * transform.forward, Color.black);
+            //Debug.DrawLine(transform.position, transform.position + Quaternion.Euler(-CameraOrientate.mainCameraTransform.rotation.eulerAngles.x, 2, 0) * transform.forward, Color.black);
             if (Input.GetKeyDown(KeyCode.Space) && !LayerManager.isLayerAnimating())
             {
                 LayerManager.nextLayer(currentPlayerMovement == defaultPlayerMovement);
+                currentPlayerMovement.stopXZMovement();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour {
                 }
                 else //in suit
                 {
-                    defaultPlayerMovement.gameObject.transform.position = currentPlayerMovement.gameObject.transform.position;
+                    defaultPlayerMovement.gameObject.transform.position = -new Vector3(0, 0.1f, 0) + currentPlayerMovement.gameObject.transform.position;
                     //deactivate old
                     currentPlayerMovement.setActivated(false);
                     currentPlayerMovement = defaultPlayerMovement;
@@ -70,9 +71,10 @@ public class PlayerController : MonoBehaviour {
             }
         }
         
-        //Debug.Log(groundContact);
+        Debug.Log(PlayerMovement.groundContact);
         if (PlayerMovement.groundContact)
         {
+            Debug.Log(1);
             currentPlayerMovement.handleMoveDirection();
         }
     }

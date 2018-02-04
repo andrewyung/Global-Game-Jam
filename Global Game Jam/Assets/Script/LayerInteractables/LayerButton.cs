@@ -45,9 +45,7 @@ public class LayerButton : MonoBehaviour {
             && targetInteractable != null)
         {
             Debug.Log("interact");
-            sr.
-                sprite = 
-                pressedSprite;
+            sr.sprite = pressedSprite;
             targetInteractable.doAction();
         }
     }

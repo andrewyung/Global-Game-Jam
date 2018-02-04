@@ -13,9 +13,10 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private PlayerMovement defaultPlayerMovement;
 
-    private PlayerMovement currentPlayerMovement;
+    private static PlayerMovement currentPlayerMovement;
 
     private Vector3 movementVector;
+    private static bool layerChangable = true;
 
 	// Use this for initialization
 	void Start () {
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour {
             //Debug.DrawLine(transform.position, transform.position + Quaternion.Euler(-CameraOrientate.mainCameraTransform.rotation.eulerAngles.x, 2, 0) * transform.forward, Color.black);
             if (Input.GetKeyDown(KeyCode.Space) && !LayerManager.isLayerAnimating())
             {
-                LayerManager.nextLayer(currentPlayerMovement == defaultPlayerMovement);
+                LayerManager.nextLayer(currentPlayerMovement == defaultPlayerMovement, layerChangable);
                 currentPlayerMovement.stopXZMovement();
             }
 
@@ -71,11 +72,19 @@ public class PlayerController : MonoBehaviour {
             }
         }
         
-        Debug.Log(PlayerMovement.groundContact);
+        //Debug.Log(PlayerMovement.groundContact);
         if (PlayerMovement.groundContact)
         {
-            Debug.Log(1);
+            //Debug.Log(1);
             currentPlayerMovement.handleMoveDirection();
+        }
+    }
+
+    public static void setLayerChangable(bool changable, PlayerMovement caller)
+    {
+        if (currentPlayerMovement == caller)
+        {
+            layerChangable = changable;
         }
     }
 }

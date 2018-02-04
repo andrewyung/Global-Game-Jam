@@ -48,14 +48,19 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    public static void layerChange(int toLayer, bool validChange)
+    public static void layerChange(int toLayer, bool isOrb, bool validArea)
     {
-        if (!validChange)
+        if (!isOrb)
         {
             gm.ui.setText("Exit suit to teleport");
             return;
         }
-        gm.ui.setText("Layer " + (toLayer + 1));
+        if (!validArea)
+        {
+            gm.ui.setText("Not in valid area for layer change");
+            return;
+        }
+        gm.ui.setText("Layer " + (toLayer + 1) % LayerManager.numberOfLayers());
     }
 
 }

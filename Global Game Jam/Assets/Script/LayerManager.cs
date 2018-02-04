@@ -19,6 +19,11 @@ public class LayerManager : MonoBehaviour {
     private static int currentLayerIndex;
     private static bool layerAnimating;
 
+    public static int numberOfLayers()
+    {
+        return lm.layerGameObjects.Length;
+    }
+
     public static bool isLayerAnimating()
     {
         return layerAnimating;
@@ -88,10 +93,10 @@ public class LayerManager : MonoBehaviour {
         return nextLayerGameObject;
     }
 
-    public static void nextLayer(bool validChange)
+    public static void nextLayer(bool isOrb, bool validArea)
     {
-        GameManager.layerChange(currentLayerIndex, validChange);
-        if (validChange)
+        GameManager.layerChange(currentLayerIndex, isOrb, validArea);
+        if (isOrb && validArea && lm.layerGameObjects.Length > 1)
         {
             lm.StartCoroutine(lm.animateLayer());
         }

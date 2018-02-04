@@ -41,6 +41,10 @@ public class PlayerMovement : MovableValidObject
             animator.SetFloat("Vertical", 0);
 
             groundContact = true;
+            if (tag.Equals("Rocket"))
+            {
+                GameManager.winGame();
+            }
         }
         else
         {
@@ -56,7 +60,7 @@ public class PlayerMovement : MovableValidObject
         if (tag.Equals("Player"))
         {
             RaycastHit rch;
-            Physics.Raycast(transform.position, -transform.up, out rch, 0.6f);
+            Physics.Raycast(transform.position, -transform.up, out rch, 0.6f, int.MaxValue, QueryTriggerInteraction.Ignore);
             Debug.DrawLine(transform.position, transform.position - (transform.up * 0.6f), Color.blue);
 
             if (rch.collider != null)
@@ -78,7 +82,7 @@ public class PlayerMovement : MovableValidObject
 
     public void handleMoveDirection()
     {
-        Debug.Log(2);
+        //Debug.Log(2);
         Vector3 keyDirectional = Vector3.zero;
         Vector3 movementVector = Vector3.zero;
         if (Input.GetKey(KeyCode.A))
@@ -130,7 +134,7 @@ public class PlayerMovement : MovableValidObject
             checkSpriteFlip(-lastKeyDirectional);
         }
 
-        Debug.Log(3);
+        //Debug.Log(3);
     }
 
     void checkSpriteFlip(Vector3 keyDirection)
@@ -159,15 +163,26 @@ public class PlayerMovement : MovableValidObject
             groundContact = false;
         }
     }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag.Equals("LayerChangeBlock"))
+        {
+            PlayerController.setLayerChangable(false, this);
+        }
+    }
+    void OnTriggerExit(Collider collider)
+    {
+        if (collider.tag.Equals("LayerChangeBlock"))
+        {
+            PlayerController.setLayerChangable(true, this);
+        }
+    }
     
     public override void handleDestroy()
     {
         Debug.Log("tag : " + gameObject.tag);
-        if (gameObject.tag.Equals("Rocket"))
-        {
-            GameManager.winGame();
-        }
-        else
+        if (!gameObject.tag.Equals("Rocket"))
         {
             GameManager.endGame();
             //destroy animation

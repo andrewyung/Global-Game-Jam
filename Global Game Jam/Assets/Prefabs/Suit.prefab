@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 95755503600822132}
   m_Layer: 20
   m_Name: Suit
-  m_TagString: Untagged
+  m_TagString: SuitPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,8 +38,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1482085392885244}
-  m_LocalRotation: {x: 0.04905868, y: 0.9501357, z: 0.1967636, w: -0.23689543}
-  m_LocalPosition: {x: -3.38, y: 1.046, z: 0}
+  m_LocalRotation: {x: 0.07465781, y: 0.90612745, z: 0.18023993, w: -0.37533024}
+  m_LocalPosition: {x: -1.15, y: 1.25, z: 5.08}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

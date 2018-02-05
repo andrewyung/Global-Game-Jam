@@ -15251,6 +15251,17 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 758363069}
+    - target: {fileID: 102294161819886810, guid: 566e6555f2ee80f4b80f448fcde8209e,
+        type: 2}
+      propertyPath: m_Text
+      value: 'Teleporter
+
+        (only teleport cubes)'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4658687183636268, guid: 566e6555f2ee80f4b80f448fcde8209e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 10.67
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 566e6555f2ee80f4b80f448fcde8209e, type: 2}
   m_IsPrefabParent: 0

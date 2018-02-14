@@ -43,6 +43,7 @@ public class PlayerMovement : MovableValidObject
             groundContact = true;
             if (tag.Equals("Rocket"))
             {
+                GetComponentInChildren<ParticleSystem>().Play();
                 GameManager.winGame();
             }
         }
@@ -113,7 +114,7 @@ public class PlayerMovement : MovableValidObject
         rb.velocity = Vector3.ClampMagnitude(movementVector.normalized * movementMultiplier, maxVelocityMagnitude);
         if (gameObject.tag.Equals("Rocket"))
         {
-            rb.velocity = new Vector3(0, 50, 0);
+            rb.AddForce(new Vector3(0, 15, 0), ForceMode.Impulse);
         }
         //Debug.Log(rb.velocity);
 

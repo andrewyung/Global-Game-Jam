@@ -17,6 +17,8 @@ public class LayerButton : MonoBehaviour {
 
     private LineRenderer lr;
 
+    private int itemsOnButton = 0;
+
 	// Use this for initialization
 	void Start () {
         sr = GetComponent<SpriteRenderer>();
@@ -44,6 +46,7 @@ public class LayerButton : MonoBehaviour {
             collider.gameObject.tag.Equals("Boulder"))
             && targetInteractable != null)
         {
+            itemsOnButton++;
             Debug.Log("interact");
             sr.sprite = pressedSprite;
             targetInteractable.doAction();
@@ -52,13 +55,16 @@ public class LayerButton : MonoBehaviour {
 
     void OnTriggerExit(Collider collider)
     {
-        if ((collider.gameObject.tag.Equals("SuitPlayer") ||
+        if ((collider.gameObject.layer == 20 ||
             collider.gameObject.tag.Equals("Boulder"))
             && targetInteractable != null)
         {
-            Debug.Log("interact");
-            sr.sprite = unpressedSprite;
-            targetInteractable.undoAction();
+            if (--itemsOnButton == 0)
+            {
+                Debug.Log("interact");
+                sr.sprite = unpressedSprite;
+                targetInteractable.undoAction();
+            }
         }
     }
 }

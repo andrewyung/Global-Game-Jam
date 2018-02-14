@@ -23,17 +23,7 @@ public class GameManager : MonoBehaviour {
         }
         gm.ui.setText("Get to your space ship to escape!");
     }
-
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene("Test");
-
-            startGame();
-        }
-    }
-	
+    
 	public static void endGame()
     {
         gm.ui.setText("You died!");

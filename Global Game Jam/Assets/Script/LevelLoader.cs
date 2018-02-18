@@ -38,5 +38,10 @@ public class LevelLoader : MonoBehaviour {
         {
             SceneManager.LoadSceneAsync("Level" + ++currentLevel);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
